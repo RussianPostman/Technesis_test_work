@@ -1,13 +1,9 @@
 import os
-from httpx import Timeout
 from dotenv import load_dotenv
-from aioredis import Redis
-
 
 load_dotenv()
 
-
-redis = Redis()
+TELEGRAM_TOKEN = os.getenv('TOKEN')
 
 bot_commands = (
     ("start", "Начало работы с ботом"),

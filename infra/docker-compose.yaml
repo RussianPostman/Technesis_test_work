@@ -1,17 +1,6 @@
 version: "3.5"
 
 services:
-  redis:
-    container_name: redislocal.Technesis
-    hostname: redislocal
-    image: redis
-    ports:
-      - "127.0.0.1:6379:6379"
-    volumes:
-        - local_redis_data:/Technesis_data
-    restart:
-      unless-stopped
-
   postgres:
     container_name: ppostgres.Technesis
     image: "postgres:15-alpine"
@@ -46,4 +35,3 @@ services:
 
 volumes:
   ppostgres.postgres.data: {}
-  local_redis_data: {}

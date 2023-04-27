@@ -5,18 +5,15 @@ from dotenv import load_dotenv
 
 from aiogram import Bot, Dispatcher
 from aiogram.types import BotCommand
-from aiogram.fsm.storage.redis import RedisStorage
+from aiogram.fsm.storage.memory import MemoryStorage
 from sqlalchemy import URL
 
 from bot.handlers import register_user_commands
-from bot.settings import bot_commands, redis
+from bot.settings import bot_commands, TELEGRAM_TOKEN
 from bot.db import create_async_engine, get_session_maker
 
 
 load_dotenv()
-
-
-TELEGRAM_TOKEN = os.getenv('TOKEN')
 
 
 async def main():
@@ -26,14 +23,14 @@ async def main():
     for cmd in bot_commands:
         commands_for_bot.append(BotCommand(command=cmd[0], description=cmd[1]))
 
-    dp = Dispatcher(storage=RedisStorage(redis=redis))
+    dp = Dispatcher()
     bot = Bot(TELEGRAM_TOKEN)
     await bot.set_my_commands(commands=commands_for_bot)
 
     postgres_url = URL.create(
         drivername="postgresql+asyncpg",
         username=os.getenv("POSTGRES_USER"),
-        host='127.0.0.1',
+        host='127.0.0.1', # os.getenv("POSTGRES_HOST"),
         database=os.getenv("POSTGRES_DB"),
         port=os.getenv("POSTGRES_PORT"),
         password=os.getenv("POSTGRES_PASSWORD")
