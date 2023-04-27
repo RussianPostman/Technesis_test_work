@@ -32,6 +32,19 @@ services:
       - "5055:80"
     depends_on:
       - postgres
+  
+  bot:
+    build: ../Technesis_bot
+    container_name: bot_1
+    restart: always
+    command: >
+      bash -c "alembic upgrade head
+      && alembic revision --autogenerate
+      && alembic upgrade head
+      && python main.py"
+    env_file:
+      - .env
+
 
 volumes:
   ppostgres.postgres.data: {}
