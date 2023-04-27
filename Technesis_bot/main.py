@@ -30,7 +30,7 @@ async def main():
     postgres_url = URL.create(
         drivername="postgresql+asyncpg",
         username=os.getenv("POSTGRES_USER"),
-        host='127.0.0.1', # os.getenv("POSTGRES_HOST"),
+        host=os.getenv("POSTGRES_HOST"),
         database=os.getenv("POSTGRES_DB"),
         port=os.getenv("POSTGRES_PORT"),
         password=os.getenv("POSTGRES_PASSWORD")
